@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+    <title>TODO</title>
+</head>
+
+<body>
+    <h1>Your Todo List:</h1>
+        <p>
+            {% for todo in todos %}
+
+                {{ todo }} <button>Delete</button>
+
+            {% endfor %}
+        </p>
+        <form action='/create-todo' method='POST'>
+            <p>
+                Create a new todo:
+            </p>
+            <input type='text' name='todo'>
+            <input type='submit' value='Create'>
+        </form>
+</body>
+</html>
