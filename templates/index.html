@@ -15,19 +15,25 @@
 
 <body>
     <h1>Your Todo List:</h1>
-        <p>
+        
+        <form> 
+
+            <input type='submit' value='Complete todo'>
+            
             {% for todo in todos %}
 
-                {{ todo }} <button>Delete</button>
+                <p><input type='checkbox'> &nbsp; {{ todo }}</p>
 
             {% endfor %}
-        </p>
-        <form action='/create-todo' method='POST'>
-            <p>
-                Create a new todo:
-            </p>
-            <input type='text' name='todo'>
-            <input type='submit' value='Create'>
+        
         </form>
+
+        <br><br>
+
+    <form action='/create-todo' method='POST'>
+        <input type='text' name='todo'>
+        <input type='submit' value='Create New Todo'>
+    </form>
+        
 </body>
 </html>

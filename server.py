@@ -1,13 +1,14 @@
 from flask import Flask, request, render_template, redirect
-from model import Todo, connect_to_db, db
 
 app = Flask(__name__)
+
+todos = []
 
 @app.route('/')
 def show_homepage():
     """Display homepage where user can view all of their todos."""
 
-    return render_template('index.html')
+    return render_template('index.html', todos=todos)
 
 
 @app.route('/create-todo', methods=['POST'])
@@ -15,26 +16,30 @@ def create_todo():
     """Create new todo items with user input."""
 
     todo = request.form.get('todo')
-    print todo
 
-    new_todo = Todo(todo=todo)
+    # if todos == {}:
+    #     todo_index = 0
+    # else:
+    #     todo_index = 1 + max(todos.keys())
 
-    # Need to add new Todo object to session before committing to database
-    db.session.add(new_todo)
-    db.session.commit()
+    # todos[todo_index] = todo
+
+    todos.append(todo)
 
     return redirect('/')
+
+@app.route('/update-todo', methods=['PATCH'])
+def update_todo():
+    """Update todo."""
+
+    pass
 
 @app.route('/delete-todo', methods=['DELETE'])
 def delete_todo():
     """Delete todo selected by user."""
 
-    pass
+    todo = Todo.query.get(id)
 
-    # todo = Todo.query.get(id)
-    
-    # db.session.delete(todo)
-    # db.session.commit()
 
 
 if __name__ == "__main__":
@@ -42,7 +47,5 @@ if __name__ == "__main__":
 
     app.jinja_env.auto_reload = app.debug  
 
-    connect_to_db(app)
-
     app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
-    app.run(port=5000, host='0.0.0.0')
+    app.run(port=4000, host='0.0.0.0')
