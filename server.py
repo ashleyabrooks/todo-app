@@ -2,7 +2,7 @@ from flask import Flask, request, render_template, redirect
 
 app = Flask(__name__)
 
-todos = {}
+TODOS = {}
 
 @app.route('/')
 def show_homepage():
@@ -11,8 +11,8 @@ def show_homepage():
     # filter dictionary by completion status so user only sees incomplete todos
     incomplete_todos = {}
 
-    for todo in todos:
-        if todos[todo] == 'incomplete':
+    for todo in TODOS:
+        if TODOS[todo] == 'incomplete':
             incomplete_todos[todo] = 'incomplete'
 
     return render_template('index.html', todos=incomplete_todos)
@@ -24,10 +24,10 @@ def create_todo():
 
     todo = request.form.get('todo')
 
-    if todo in todos:
+    if todo in TODOS:
         pass
     else:
-        todos[todo] = 'incomplete'
+        TODOS[todo] = 'incomplete'
 
     return redirect('/')
 
@@ -38,7 +38,7 @@ def complete_todo():
 
     todo = request.form.get('todo')
 
-    todos[todo] = 'complete'
+    TODOS[todo] = 'complete'
 
     return redirect('/')
 
@@ -49,4 +49,7 @@ if __name__ == "__main__":
     app.jinja_env.auto_reload = app.debug  
 
     app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
-    app.run(port=4000, host='0.0.0.0')
+
+    PORT = int(os.environ.get("PORT", 5000))
+
+    app.run(host="0.0.0.0", port=PORT)
