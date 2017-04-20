@@ -13,7 +13,7 @@ def connect_to_db(app):
     db.init_app(app)
 
 
-class Todo(object):
+class Todo(db.Model):
     """Class for Todo item."""
 
     __tablename__ = 'todos'

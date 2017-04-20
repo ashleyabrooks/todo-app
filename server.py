@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
 from model import Todo, connect_to_db, db
 
 app = Flask(__name__)
@@ -15,6 +15,7 @@ def create_todo():
     """Create new todo items with user input."""
 
     todo = request.form.get('todo')
+    print todo
 
     new_todo = Todo(todo=todo)
 
@@ -28,10 +29,12 @@ def create_todo():
 def delete_todo():
     """Delete todo selected by user."""
 
-    todo = Todo.query.get(id)
+    pass
+
+    # todo = Todo.query.get(id)
     
-    db.session.delete(todo)
-    db.session.commit()
+    # db.session.delete(todo)
+    # db.session.commit()
 
 
 if __name__ == "__main__":
@@ -42,4 +45,4 @@ if __name__ == "__main__":
     connect_to_db(app)
 
     app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
-    app.run(port=3000, host='0.0.0.0')
+    app.run(port=5000, host='0.0.0.0')
