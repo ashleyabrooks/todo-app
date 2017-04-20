@@ -4,29 +4,29 @@
 
 <head>
     <title>TODO</title>
+    
     <style>
+        
         html {
             font-family: sans-serif;
             display: inline-block;
             margin: 25px;
         }
+
     </style>
+
 </head>
 
 <body>
     <h1>Your Todo List:</h1>
-        
-        <form action='/complete-todo'> 
-
-            <input type='submit' value='Complete todo'>
             
             {% for todo in todos %}
-
-                <p><input type='checkbox'> &nbsp; {{ todo }}</p>
-
+                <form action='/complete-todo' method='POST'> 
+                    <div>{{ todo }}
+                    <input type='hidden' name='todo' value='{{ todo }}'>
+                    <input type='submit' value=&#10004;></div>
+                </form> <br>  
             {% endfor %}
-        
-        </form>
 
         <br><br>
 
