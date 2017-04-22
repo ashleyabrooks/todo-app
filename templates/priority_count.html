@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+    <title>TODO</title>
+    
+    <style>
+        
+        html {
+            font-family: sans-serif;
+            display: inline-block;
+            margin: 25px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <h1>Priority Count:</h1>
+
+    {% for priority in priority_count %}
+        <p>Priority Level: {{ priority }} Count: {{ priority_count[priority] }}</p>
+    {% endfor %}
+
+    {{ missing_p_levels }}        
+        
+</body>
+</html>

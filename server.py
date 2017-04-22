@@ -1,6 +1,8 @@
 from flask import Flask, request, render_template, redirect
 import os
 
+"""DEPLOYED AT http://ab-todo-app.herokuapp.com/"""
+
 app = Flask(__name__)
 
 TODOS = {}
@@ -13,8 +15,8 @@ def show_homepage():
     incomplete_todos = {}
 
     for todo in TODOS:
-        if TODOS[todo] == 'incomplete':
-            incomplete_todos[todo] = 'incomplete'
+        if TODOS[todo][0] == 'incomplete':
+            incomplete_todos[todo] = ['incomplete', TODOS[todo][1]]
 
     return render_template('index.html', todos=incomplete_todos)
 
@@ -24,11 +26,12 @@ def create_todo():
     """Create new todo items with user input."""
 
     todo = request.form.get('todo')
+    priority_level = request.form.get('priority-level')
 
     if todo in TODOS:
         pass
     else:
-        TODOS[todo] = 'incomplete'
+        TODOS[todo] = ['incomplete', priority_level]
 
     return redirect('/')
 
@@ -42,6 +45,25 @@ def complete_todo():
     TODOS[todo] = 'complete'
 
     return redirect('/')
+
+
+@app.route('/count-priorities')
+def count_priorities():
+    """Counts number of todos at a specific priority level."""
+
+    priority_count = {} 
+
+    for todo in TODOS:
+
+        priority = TODOS[todo][1]
+
+        if priority in priority_count:
+            priority_count[priority] += 1
+        else:
+            priority_count[priority] = 1
+
+    return render_template('priority_count.html', priority_count=priority_count,
+                                                  missing_p_levels=missing_p_levels)
 
 
 @app.route('/error', methods=['POST'])
@@ -89,6 +111,7 @@ if __name__ == "__main__":
 
     app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
-    PORT = int(os.environ.get("PORT", 5000))
+    # Heroku provides a random port so saving in a variable
+    # PORT = int(os.environ.get("PORT", 5000)) 
 
-    app.run(host="0.0.0.0", port=PORT)
+    app.run(host="0.0.0.0", port=3000)

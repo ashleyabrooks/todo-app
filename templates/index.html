@@ -19,10 +19,12 @@
 
 <body>
     <h1>Your Todo List:</h1>
+
+    <a href='/count-priorities'>View Priority Count</a>
             
             {% for todo in todos %}
                 <form action='/complete-todo' method='POST'> 
-                    <div>{{ todo }}
+                    <div>{{ todo }} {{ todos[todo][1] }}
                     <input type='hidden' name='todo' value='{{ todo }}'>
                     <input type='submit' value=&#10004;></div>
                 </form> <br>  
@@ -31,7 +33,8 @@
         <br><br>
 
     <form action='/create-todo' method='POST'>
-        <input type='text' name='todo'>
+        Todo Name: <input type='text' name='todo'><br>
+        Priority Level: <input type='text' name='priority-level'>
         <input type='submit' value='Create New Todo'>
     </form>
         
