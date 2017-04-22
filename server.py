@@ -66,7 +66,7 @@ def count_priorities():
                                                   missing_p_levels=missing_p_levels)
 
 
-@app.route('/error', methods=['POST'])
+@app.errorhandler(500)
 def page_pagerduty():
     """Send JSON body to PagerDuty."""
 
