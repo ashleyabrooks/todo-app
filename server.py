@@ -72,8 +72,6 @@ def count_priorities():
 def page_pagerduty():
     """Send JSON body to PagerDuty."""
 
-    # TODO - Fix
-
     url = 'https://events.pagerduty.com/generic/2010-04-15/create_event.json'
 
     payload = {    
