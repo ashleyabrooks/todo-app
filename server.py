@@ -1,5 +1,7 @@
 from flask import Flask, request, render_template, redirect
 import os
+import requests
+import json
 
 """DEPLOYED AT http://ab-todo-app.herokuapp.com/"""
 
@@ -66,7 +68,7 @@ def count_priorities():
                                                   missing_p_levels=missing_p_levels)
 
 
-@app.errorhandler(500)
+@app.route('/error')
 def page_pagerduty():
     """Send JSON body to PagerDuty."""
 
@@ -101,7 +103,9 @@ def page_pagerduty():
 
     r = requests.post(url, data=json.dumps(payload))
 
-    print r.json()
+    print 'ERROR MESSAGE:', r.json()
+
+    return render_template('error.html', error_data=r.json())
 
 
 if __name__ == "__main__":
